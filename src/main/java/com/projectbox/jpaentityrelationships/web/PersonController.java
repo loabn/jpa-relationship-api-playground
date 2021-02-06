@@ -13,12 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping(path = "/people")
@@ -61,6 +57,7 @@ public class PersonController {
         Person newPerson = personService.savePerson(person);
 
         logger.info("[PersonController] Creating a new person.");
+        logger.info(String.format("[PersonController] The phone numbers of the person where: %s", person.getPhoneNumbers()));
         logger.info(String.format("[PersonController] The address of the person passed in %s: ", person.getAddress().toString()));
 
         return new ResponseEntity<>(newPerson, HttpStatus.CREATED);

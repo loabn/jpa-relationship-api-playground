@@ -1,6 +1,7 @@
 package com.projectbox.jpaentityrelationships.services;
 
 import com.projectbox.jpaentityrelationships.entities.Person;
+import com.projectbox.jpaentityrelationships.entities.PhoneNumber;
 import com.projectbox.jpaentityrelationships.exceptions.PersonNotFoundException;
 import com.projectbox.jpaentityrelationships.repositories.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,4 +67,16 @@ public class PersonServiceImpl implements PersonService {
         personRepository.delete(person);
     }
 
+    @Override
+    public List<PhoneNumber> findPersonPhoneNumbers(Long id) {
+        Optional<Person> optionalPerson = personRepository.findById(id);
+
+        if (optionalPerson.isEmpty()) {
+            throw new PersonNotFoundException("No Person with that id found");
+        }
+
+        Person person = optionalPerson.get();
+
+        return person.getPhoneNumbers();
+    }
 }

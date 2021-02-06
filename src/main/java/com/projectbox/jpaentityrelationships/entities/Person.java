@@ -1,6 +1,7 @@
 package com.projectbox.jpaentityrelationships.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "Person")
@@ -16,15 +17,20 @@ public class Person {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    public Person(Long id, String name, Address address) {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PhoneNumber> phoneNumbers;
+
+    public Person(Long id, String name, Address address, List<PhoneNumber> phoneNumbers)  {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.phoneNumbers = phoneNumbers;
     }
 
-    public Person(String name, Address address) {
+    public Person(String name, Address address, List<PhoneNumber> phoneNumbers) {
         this.name = name;
         this.address = address;
+        this.phoneNumbers = phoneNumbers;
     }
 
     public Person() {
@@ -52,6 +58,14 @@ public class Person {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<PhoneNumber> getPhoneNumbers() {
+        return phoneNumbers;
+    }
+
+    public void setPhoneNumbers(List<PhoneNumber> phoneNumbers) {
+        this.phoneNumbers = phoneNumbers;
     }
 
     @Override
